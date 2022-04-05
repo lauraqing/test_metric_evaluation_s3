@@ -2,7 +2,7 @@ I. What is it？
 This is a sample metric evaluation platform for machine learning and data analysis.
 
 II. Why should I do it?
-Open for fun
+Open for fun; give me any suggestions if you have.
 
 III. How can I use it?
 click main.py. It automatically generate the testing results.
@@ -13,6 +13,9 @@ IV. What is the sample data?
 (1) Test flag - 0. iris-setosa  
 (2) Test flag - 1. Iris-versicolor 
 (3) Test flag - 2. iris-virginica
+![1](https://user-images.githubusercontent.com/33529912/161707082-da38af35-99e7-458a-ab30-42b7f85db484.png)
+
+
 
 <2> In order to match the binominal problem request, we are calculating the accuracy to include 2 kinds of flowers together for Truth:
 (1) Target flowers to identity: 1 & 2 ===> True
