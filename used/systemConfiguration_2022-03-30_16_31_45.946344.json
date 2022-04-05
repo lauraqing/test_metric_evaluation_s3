@@ -1,0 +1,13 @@
+{
+    "metrics_init": [
+        "Accuracy",
+        "Sensitivity",
+        "Specificity",
+        "AUC",
+        "SSEP"
+    ],
+    "confidence_interval": true,
+    "ratio": 0.7,
+    "alpha_confidenceInterval": 0.0,
+    "num_bootstraps": 0
+}
