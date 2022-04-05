@@ -26,5 +26,5 @@ IV. What is the sample data?
 
 <4> User Guides:
 ![image](https://user-images.githubusercontent.com/33529912/161706251-593eba3d-45be-457c-be10-973fd5dc80c3.png)
-![image](https://user-images.githubusercontent.com/33529912/161706275-948d15be-cb3a-43a1-ad04-8ffec2938920.png)
+![2](https://user-images.githubusercontent.com/33529912/161707324-155ed453-691d-4970-b737-601016ff96c9.png)
 ![image](https://user-images.githubusercontent.com/33529912/161706280-520886a5-3214-4be3-b4b2-a095c3009934.png)
