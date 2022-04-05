@@ -1,23 +1,27 @@
-Table of Contents
-=================
+I. What is it？
+This is a sample metric evaluation platform for machine learning and data analysis.
 
-Header: Server=GitHub.com
-Header: X-Ratelimit-Remaining=58
-Header: X-Ratelimit-Used=2
-Header: X-Content-Type-Options=nosniff
-Header: X-Xss-Protection=0
-Header: Date=Tue, 05 Apr 2022 07:39:03 GMT
-Header: Content-Type=text/html;charset=utf-8
-Header: Content-Length=13
-Header: Access-Control-Expose-Headers=ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset
-Header: Content-Security-Policy=default-src 'none'
-Header: X-Ratelimit-Reset=1649145986
-Header: X-Ratelimit-Resource=core
-Header: Access-Control-Allow-Origin=*
-Header: Vary=Accept-Encoding, Accept, X-Requested-With
-Header: X-Github-Request-Id=2737:7706:60365A:65AD6E:624BF217
-Header: X-Commonmarker-Version=0.23.4
-Header: X-Ratelimit-Limit=60
-Header: Strict-Transport-Security=max-age=31536000; includeSubdomains; preload
-Header: X-Frame-Options=deny
-Header: Referrer-Policy=origin-when-cross-origin, strict-origin-when-cross-origin
+II. Why should I do it?
+Open for fun
+
+III. How can I use it?
+click main.py. It automatically generate the testing results.
+
+IV. What is the sample data?
+<1> We use Iris open datasets and sklearn library inside this study. Source open data reference link -- https://archive.ics.uci.edu/ml/datasets/iris
+
+(1) Test flag - 0. iris-setosa  
+(2) Test flag - 1. Iris-versicolor 
+(3) Test flag - 2. iris-virginica
+
+<2> In order to match the binominal problem request, we are calculating the accuracy to include 2 kinds of flowers together for Truth:
+(1) Target flowers to identity: 1 & 2 ===> True
+(2) Non-target flower tag: 0 ===> False
+
+<3> System Design Level Demo:
+![SystemLevel](https://user-images.githubusercontent.com/33529912/161706130-3b4bb84c-0db7-41d7-84ca-7c905d2249b9.jpg)
+
+<4> User Guides:
+![image](https://user-images.githubusercontent.com/33529912/161706251-593eba3d-45be-457c-be10-973fd5dc80c3.png)
+![image](https://user-images.githubusercontent.com/33529912/161706275-948d15be-cb3a-43a1-ad04-8ffec2938920.png)
+![image](https://user-images.githubusercontent.com/33529912/161706280-520886a5-3214-4be3-b4b2-a095c3009934.png)
