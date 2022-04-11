@@ -4,6 +4,7 @@ from sklearn.utils import resample
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn import datasets
 from stage3.results_counter import results_counter
 from stage3.data_StringToInt import data_StringToInt
 
@@ -33,54 +34,73 @@ def model_training_bootstrap(model_type, segmentation_ratio, bootstrap_parameter
 
     ## logisticRegressionDemo with bootstrap activation
     print(">>> Applied sklearn LogisticRegression to process Iris data samples (segsegmentation_ration=", segmentation_ratio, "):")
-    #Type1
-    input_txt_file = r'irisdata.txt'
-    [train_data, test_data, train_flag, test_flag] = txt_srcData_load(input_txt_file, segmentation_ratio)
-    # print("---AfterRandomGenerator--->")
-    # print("Train Data Information: ", (len(train_data)), "x", len(train_data[0])) #87 x 4
-    # print("Train Flag Information: ", (len(train_flag)), "x", len(train_flag[0])) #63 x 11 <--StringType
+    ##Type2_LogisticRegressionFromSklearnLib
+    data = datasets.load_iris()
+    X = data['data']
+    Y = data['target']
 
-    # flag switch function
-    # print("---AfterDataFormatTransfer--->")
-    train_data = data_StringToInt(r'used/train_data.csv')
-    # print("Train Data Information: ", (len(train_data)), "x")#, len(train_data[0])) #
-    train_flag = flag_StringToInt(r'used/train_flag.csv') #StringFlag to Int
-    # print(train_flag)
-    # print("Train Flag Information: ", (len(train_flag)), "x 1") #63 x 1 <---IntType
+    all = [] #2x150
+    all[0:4] = X
+    all[:,5] = Y
 
-    # print(train_data)
-    # print(">>> Applied Bootstrap in the number iterations as:", num_bootstraps)
-    # bootstrap_X = resample(train_data, n_samples=num_bootstraps, replace=True)
-    # bootstrap_Y = resample(train_flag, n_samples=num_bootstraps, replace=True)
-    # clf = OneVsRestClassifier(LogisticRegression())
-    # clf.fit(train_data, train_flag)
-
-    # pred = clf.predict(test_data)
-    # pred_prob = clf.predict_proba(test_data)
-    # model_results_tmp = [pred, pred_prob, test_data, test_flag]
-    #
-    # #model_results_TF_counter:
-    # pred, pred_prob, test_data, test_flag = model_results_tmp[0], model_results_tmp[1], model_results_tmp[2], model_results_tmp[3]
-    # print(">>> Loaded prediction results with size 1x", len(pred), "; Sample Data:", pred[0]) # 1x105: [1 0 2 1 1 0 1 ...
-    # print(">>> Loaded test_flag results with size 1x", len(test_flag), "; Sample Data:", test_flag[0]) # 105:[1 0 2 1 1 0 1 ..
-    # print(">>> Loaded pred_prob results with size 3x", len(pred_prob), "; Sample Data:", pred_prob[0]) # 3x105: [[0.01535705 0.65225435 0.3323886 ]
-    # print(">>> Loaded test_data results with size 4x", len(test_data), "; Sample Data:", test_data[0]) # 4x105: [[6.1 2.8 4.7 1.2]
-    #
-    # [TP_counter, FP_counter, TN_counter, FN_counter] = results_counter(pred, test_flag, threshold)
-    # model_results = [TP_counter, FP_counter, TN_counter, FN_counter, pred, pred_prob, test_data, test_flag] #TP, FP, TN, FN
-    # print(model_results[:4])
-    # model_results = model_training_bootstrap(model_type, segmentation_ratio, bootstrap_parameters)
+    print("All merged as ", len(all), "x", len(all[0]))
+    print(all)
+    print(">>> Applied Bootstrap in the number iterations as:", num_bootstraps)
+    for i in 100:
+        bootstrap_all = resample(all, n_samples=num_bootstraps, replace=True, random_state=100)
+    # bootstrap_X = resample(X, n_samples=num_bootstraps, replace=True, random_state=100)
+    # bootstrap_Y = resample(Y, n_samples=num_bootstraps, replace=True, random_state=100)
+    # out-of-bag observations:
+    # oob_X = [x for x in X if x not in bootstrap_X] #no out of bag
+    # oob_Y = [y for y in Y if y not in bootstrap_Y] #no out of bag
+    # print("Check if any out-of-bag:")
+    # print(oob_X)
+    # print(oob_Y)
+    # print(bootstrap_X)
+    # print("Before Bootstrap X Data Length:", len(X), "; After Bootstrap X Data Length:", len(bootstrap_X)) # 150x1000
+    # print(bootstrap_Y)
+    # print("Before Bootstrap Y Data Length:", len(Y), "; After Bootstrap Y Data Length:", len(bootstrap_Y)) # 150x1000
 
 
-# #Merge Test: #3 error by repeating citing flag_StringToInt & data_StringToInt: for fix uses to include search after randomGen funced
-# segmentation_ratio = 0.6  # data segmentation ratio: train vs. test
-# confidence_interval_flag = True  # ci for confidence interval in output
-# num_bootstraps = 1000  # number of iterations of bootstrapping to compute confidence interval
-# threshold = 0.7  # threshold for metrics with operating points (eg. accuracy)
-# alpha_confidence_interval = 0.1  # alpha parameter for confidence level of the interval
-# model_type = 'LogisticRegression'
-# input_json_file, output_json_file = r'metric_input.json', r'metric_output.json'
-# #load inputJson Value is not predefined with this script
-# bootstrap_parameters = [num_bootstraps, threshold, alpha_confidence_interval, confidence_interval_flag]
-# model_training_bootstrap(model_type, segmentation_ratio, bootstrap_parameters)
-# # model_results = model_training_bootstrap(model_type, segmentation_ratio, bootstrap_parameters)
+    train_data, test_data, train_flag, test_flag = train_test_split(X, Y, test_size=segmentation_ratio, random_state=42)
+    clf = OneVsRestClassifier(LogisticRegression())
+    clf.fit(train_data, train_flag)
+
+    pred = clf.predict(test_data)
+    pred_prob = clf.predict_proba(test_data)
+    # print("Prediction data:", pred) #[1 0 2 1 1 0 1 2 1 1 2 0 0 0 0
+    # print("Prediciton probability matrix:", pred_prob) # [8.39395247e-01 1.60440790e-01 1.63963183e-04]
+    print(">>> Saved model results & Exited.")
+    #starting test point #1:
+    model_results_tmp = [pred, pred_prob, test_data, test_flag]
+
+    #model_results_TF_counter:
+    pred, pred_prob, test_data, test_flag = model_results_tmp[0], model_results_tmp[1], model_results_tmp[2], model_results_tmp[3]
+    print(">>> Loaded prediction results with size 1x", len(pred), "; Sample Data:", pred[0]) # 1x105: [1 0 2 1 1 0 1 ...
+    print(">>> Loaded test_flag results with size 1x", len(test_flag), "; Sample Data:", test_flag[0]) # 105:[1 0 2 1 1 0 1 ..
+    print(">>> Loaded pred_prob results with size 3x", len(pred_prob), "; Sample Data:", pred_prob[0]) # 3x105: [[0.01535705 0.65225435 0.3323886 ]
+    print(">>> Loaded test_data results with size 4x", len(test_data), "; Sample Data:", test_data[0]) # 4x105: [[6.1 2.8 4.7 1.2]
+
+    [TP_counter, FP_counter, TN_counter, FN_counter] = results_counter(pred, test_flag, threshold)
+    model_results = [TP_counter, FP_counter, TN_counter, FN_counter, pred, pred_prob, test_data, test_flag] #TP, FP, TN, FN
+    # print(model_results)
+
+    return model_results
+
+
+#Merge Test: v1.7
+from stage3.metric_calculation import metric_calculation
+
+segmentation_ratio = 0.6  # data segmentation ratio: train vs. test
+confidence_interval_flag = True  # ci for confidence interval in output
+num_bootstraps = 1000  # number of iterations of bootstrapping to compute confidence interval
+threshold = 0.7  # threshold for metrics with operating points (eg. accuracy)
+alpha_confidence_interval = 0.1  # alpha parameter for confidence level of the interval
+model_type = 'LogisticRegression'
+input_json_file, output_json_file = r'metric_input.json', r'metric_output.json'
+#load inputJson Value is not predefined with this script
+bootstrap_parameters = [num_bootstraps, threshold, alpha_confidence_interval, confidence_interval_flag]
+model_results = model_training_bootstrap(model_type, segmentation_ratio, bootstrap_parameters)
+metric_results = metric_calculation(model_results, input_json_file)
+print("===============================================================================================")
+print(metric_results)
