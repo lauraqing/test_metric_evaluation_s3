@@ -88,19 +88,19 @@ def model_training_bootstrap(model_type, segmentation_ratio, bootstrap_parameter
     return model_results
 
 
-#Merge Test: v1.7
-from stage3.metric_calculation import metric_calculation
-
-segmentation_ratio = 0.6  # data segmentation ratio: train vs. test
-confidence_interval_flag = True  # ci for confidence interval in output
-num_bootstraps = 1000  # number of iterations of bootstrapping to compute confidence interval
-threshold = 0.7  # threshold for metrics with operating points (eg. accuracy)
-alpha_confidence_interval = 0.1  # alpha parameter for confidence level of the interval
-model_type = 'LogisticRegression'
-input_json_file, output_json_file = r'metric_input.json', r'metric_output.json'
-#load inputJson Value is not predefined with this script
-bootstrap_parameters = [num_bootstraps, threshold, alpha_confidence_interval, confidence_interval_flag]
-model_results = model_training_bootstrap(model_type, segmentation_ratio, bootstrap_parameters)
-metric_results = metric_calculation(model_results, input_json_file)
-print("===============================================================================================")
-print(metric_results)
+# #Merge Test: v1.7
+# from stage3.metric_calculation import metric_calculation
+#
+# segmentation_ratio = 0.6  # data segmentation ratio: train vs. test
+# confidence_interval_flag = True  # ci for confidence interval in output
+# num_bootstraps = 1000  # number of iterations of bootstrapping to compute confidence interval
+# threshold = 0.7  # threshold for metrics with operating points (eg. accuracy)
+# alpha_confidence_interval = 0.1  # alpha parameter for confidence level of the interval
+# model_type = 'LogisticRegression'
+# input_json_file, output_json_file = r'metric_input.json', r'metric_output.json'
+# #load inputJson Value is not predefined with this script
+# bootstrap_parameters = [num_bootstraps, threshold, alpha_confidence_interval, confidence_interval_flag]
+# model_results = model_training_bootstrap(model_type, segmentation_ratio, bootstrap_parameters)
+# metric_results = metric_calculation(model_results, input_json_file)
+# print("===============================================================================================")
+# print(metric_results)
