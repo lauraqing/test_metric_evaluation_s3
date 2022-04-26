@@ -17,7 +17,7 @@ IV. What is the sample data?
 
 
 
-<2> In order to match the binominal problem request, we are calculating the accuracy to include 2 kinds of flowers together for Truth:
+<2> In order to match the binomial problem request, we are calculating the accuracy to include 2 kinds of flowers together for Truth:
 (1) Target flowers to identity: 1 & 2 ===> True
 (2) Non-target flower tag: 0 ===> False
 
